@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import tech.phixlab.nota.NewNote;
 import tech.phixlab.nota.NoteDetail;
 import tech.phixlab.nota.R;
 import tech.phixlab.nota.model.Note;
@@ -60,12 +61,35 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
             }
         });
 
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mNoteList.remove(position);
+                return deleteNote(position);
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return mNoteList.size();
     }
+
+    // delete note using id
+    private boolean deleteNote(int i){
+
+        // Initializing db with access using current context
+        DataSource ds = new DataSource(mContext);
+
+        // open db for writing
+        ds.openDb();
+
+       return ds.deleteNote(i);
+    }
+
+
 
     private String trimTtile(String title, int limit){
         if (title.length() > limit){
