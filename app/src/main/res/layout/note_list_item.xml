@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/title_drop"
+        android:layout_width="80dp"
+        android:gravity="center"
+        android:layout_height="80dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textSize="50sp"
+        android:background="@color/title_drop_bg"
+        android:text="T"/>
+
+    <TextView
+        android:layout_toRightOf="@id/title_drop"
+        android:id="@+id/note_title"
+        android:textStyle="bold"
+        android:paddingLeft="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="How to make bread and  plus "/>
+    <TextView
+        android:id="@+id/note_body"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:layout_toRightOf="@id/title_drop"
+        android:layout_below="@id/note_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The london.htm and paris.htm are normal HTML files, which you can add AngularJS expressions as "/>
+
+</RelativeLayout>
