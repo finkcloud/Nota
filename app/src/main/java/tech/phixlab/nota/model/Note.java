@@ -7,7 +7,6 @@ public class Note {
     private String dateTime;
 
 
-
     public Note(int id, String title, String body, String dateTime) {
         this.id = id;
         this.title = title;

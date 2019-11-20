@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import tech.phixlab.nota.model.Note;
 
 public class NewNote extends AppCompatActivity {
     Note notes;
+    EditText notetitle, notebody;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +31,15 @@ public class NewNote extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        notetitle = findViewById(R.id.editTextNoteTitle);
+        notebody  = findViewById(R.id.editTextBody);
+
         FloatingActionButton fab = findViewById(R.id.fabSave);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               saveNote();
             }
         });
 
@@ -46,9 +51,12 @@ public class NewNote extends AppCompatActivity {
         // Creating new note
         notes = new Note();
 
-        // note title from edit
+        String title = notetitle.getText().toString();
+        String body = notebody.getText().toString();
         // note body from edit
         notes.setDateTime(formatDate(new Date()) + " " + formatTime(new Date()));
+        notes.setTitle(title);
+        notes.setBody(body);
 
 
         // Initializing db with access using current context

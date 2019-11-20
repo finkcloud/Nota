@@ -1,5 +1,6 @@
 package tech.phixlab.nota;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     // get the reference of RecyclerView
     RecyclerView recyclerView;
-    NoteAdapter musicAdapter;
+    NoteAdapter noteAdapter;
 
     LinearLayoutManager linearLayoutManager;
 
@@ -39,12 +40,11 @@ public class MainActivity extends AppCompatActivity {
         // load noted from db
         loadNote();
 
-        FloatingActionButton fab = findViewById(R.id.fabSave);
+        FloatingActionButton fab = findViewById(R.id.fabNew);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+               startActivity(new Intent(MainActivity.this, NewNote.class));
             }
         });
     }
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(linearLayoutManager); // set LayoutManager to RecyclerView
 
             //check if music adapter is empty
-            if(musicAdapter == null){
-                musicAdapter = new NoteAdapter(MainActivity.this,  notesList);
+            if(noteAdapter == null){
+                noteAdapter = new NoteAdapter(MainActivity.this,  notesList);
 
-                recyclerView.setAdapter(musicAdapter); // sets adapter to hold the image
+                recyclerView.setAdapter(noteAdapter); // sets adapter to hold the image
 
             }
         }

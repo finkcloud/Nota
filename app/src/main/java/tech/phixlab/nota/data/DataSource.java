@@ -31,10 +31,10 @@ public class DataSource {
         boolean didSucceed = false;
         try {
             ContentValues initialValues = new ContentValues();
-            initialValues.put("note_title", note.getTitle());
-            initialValues.put("note_body", note.getBody());
-            initialValues.put("note_date", note.getDateTime());
-            didSucceed = database.insert("note", null, initialValues) > 0;
+            initialValues.put(NoteContract.NoteEntry.COLUMN_NAME_TITLE, note.getTitle());
+            initialValues.put(NoteContract.NoteEntry.COLUMN_NAME_NOTE_BODY, note.getBody());
+            initialValues.put(NoteContract.NoteEntry.COLUMN_NAME_NOTE_DATE, note.getDateTime());
+            didSucceed = database.insert(NoteContract.NoteEntry.TABLE_NAME, null, initialValues) > 0;
         } catch (Exception e) {
             //Do nothing -will return false if there is an exception //5
         }
@@ -45,7 +45,8 @@ public class DataSource {
     public boolean deleteNote(int noteId) {
         boolean didDelete = false;
         try {
-            didDelete = database.delete("note", NoteContract.NoteEntry._ID + "=" + noteId, null) > 0;
+            didDelete = database.delete(NoteContract.NoteEntry.TABLE_NAME,
+                    NoteContract.NoteEntry._ID + "=" + noteId, null) > 0;
         } catch (Exception e) {
             //Do nothing -return value already set to false
         }
@@ -89,7 +90,7 @@ public class DataSource {
     public int getLastNoteId() {
         int lastId;
         try {
-            String query = "Select MAX(note_id) from notes";
+            String query = "Select MAX(note_id) from " + NoteContract.NoteEntry.TABLE_NAME;
             Cursor cursor = database.rawQuery(query, null);
             cursor.moveToFirst();
             lastId = cursor.getInt(0);
