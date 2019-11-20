@@ -45,8 +45,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         //set its data
         holder.noteTitleTv.setText(trimTtile(note.getTitle(), 23));
-        holder.noteBodyTv.setText(trimTtile(note.getBody(), 23));
-        holder.noteTitleDrop.setText(getFirstChar(note.getTitle()));
+        holder.noteBodyTv.setText(trimTtile(note.getBody(), 100));
+        //holder.noteTitleDrop.setText(getFirstChar(note.getTitle()));
 
         // implement setOnClickListener event on item view.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,8 +55,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
                 // open another activity on item click
                 Intent intent = new Intent(mContext, NoteDetail.class);
                 intent.putExtra("title", mNoteList.get(position).getTitle()); // put title data in Intent
-                intent.putExtra("body", mNoteList.get(position).getTitle()); // put body data in Intent
-                intent.putExtra("date", mNoteList.get(position).getTitle()); // put datetime data in Intent
+                intent.putExtra("body", mNoteList.get(position).getBody()); // put body data in Intent
+                intent.putExtra("date", mNoteList.get(position).getDateTime()); // put datetime data in Intent
                 mContext.startActivity(intent); // start Intent
             }
         });
