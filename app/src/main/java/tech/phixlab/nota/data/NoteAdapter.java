@@ -1,18 +1,18 @@
 package tech.phixlab.nota.data;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import java.util.ArrayList;
 
-import tech.phixlab.nota.NewNote;
 import tech.phixlab.nota.NoteDetail;
 import tech.phixlab.nota.R;
 import tech.phixlab.nota.model.Note;
@@ -21,11 +21,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     private Context mContext;
     private ArrayList<Note> mNoteList;
+    AlertDialog.Builder builder;
 
 
-    public NoteAdapter(Context context, ArrayList<Note> musiclist){
+    public NoteAdapter(Context context, ArrayList<Note> notelist){
         this.mContext = context;
-        this.mNoteList = musiclist;
+        this.mNoteList = notelist;
 
     }
 
@@ -45,8 +46,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
         //set its data
         holder.noteTitleTv.setText(trimTtile(note.getTitle(), 23));
-        holder.noteBodyTv.setText(trimTtile(note.getBody(), 100));
-        //holder.noteTitleDrop.setText(getFirstChar(note.getTitle()));
+        holder.noteBodyTv.setText(trimTtile(note.getBody(), 50));
+        holder.noteTitleDrop.setText("" + getFirstChar(note.getTitle()));
 
         // implement setOnClickListener event on item view.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -65,8 +66,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                mNoteList.remove(position);
-                return deleteNote(position);
+
+                DeleteNoteDialog("Hey watch out", "Are you sure you want to delete this note",
+                        true,"Delete", "Cancel", position);
+                return true;
             }
         });
 
@@ -76,6 +79,35 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     public int getItemCount() {
         return mNoteList.size();
     }
+
+
+    // show no interne alert
+    private void DeleteNoteDialog(String title, String msg, boolean cancelable, String posBtn, String negBtn, final int position) {
+        //Setting message manually and performing action on button click
+        builder = new AlertDialog.Builder(mContext); // alert
+        builder.setMessage(msg)
+                .setTitle(title)
+                .setCancelable(cancelable)
+                .setPositiveButton(posBtn, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        mNoteList.remove(position);
+                        deleteNote(position);
+
+                    }
+                })
+                .setNegativeButton(negBtn, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                       dialog.dismiss();
+
+                    }
+                });
+        //Creating dialog box
+        AlertDialog alert = builder.create();
+        //Setting the title manually
+        alert.show();
+    }
+
 
     // delete note using id
     private boolean deleteNote(int i){
@@ -101,8 +133,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
 
     private char getFirstChar(String title){
-        char first;
-        first = title.charAt(0);
+
+        char first = title.charAt(0);
         return first;
     }
 
